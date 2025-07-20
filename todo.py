@@ -21,10 +21,10 @@ def addTask(event=None):
     if (len(entry_box_value)!=0) and (entry_box_value is not None) and (len(taskList)!=0):
         for i in range(len(taskList)):
             taskLabel = tk.Label(scrollable_frame, text=f"{i+1}. "+ taskList[i], font=entry_font)
-            taskLabel.grid(row=1+i, column=0, sticky='nw')
+            taskLabel.grid(row=i, column=0, sticky='nw')
 
             checkBox = tk.Checkbutton(scrollable_frame, font=("Arial", 16))
-            checkBox.grid(row=1+i, column=1, padx=5)
+            checkBox.grid(row=i, column=1, padx=5)
 
         # Update scrollregion
         canvas.configure(scrollregion=canvas.bbox("all"))
@@ -38,23 +38,18 @@ def deleteTask(taskList):
     entryBox.delete(0, tk.END)
     # clear tasklist container
     taskList.clear()
+    
 
     # clear widgets from the scrollable frame
     for w in scrollable_frame.grid_slaves():
         w.destroy()
     
-    # Update scrollregion
-    canvas.configure(scrollregion=canvas.bbox("all"))
 
 
 # Bind mousewheel to canvas scrolling
-def _on_mousewheel(event):
+def mouseWheel(event):
     canvas.yview_scroll(int(-1*(event.delta/120)), "units")
 
-
-# Scroll handling
-def on_configure(event):
-    canvas.configure(scrollregion=canvas.bbox("all"))
 
 # Designing the User Interface
 window = tk.Tk()
@@ -102,8 +97,6 @@ canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
 
 canvas.bind_all("<Button-5>", lambda e: canvas.yview_scroll(1, "units"))   # Linux scroll down
 canvas.bind_all("<Button-4>", lambda e: canvas.yview_scroll(-1, "units"))  # Linux scroll up
-
-scrollable_frame.bind("<Configure>", on_configure)
 
 # Bind the Enter key to the addTask() function
 entryBox.bind("<Return>", addTask)
