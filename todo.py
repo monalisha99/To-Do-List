@@ -21,21 +21,28 @@ def deleteTask(taskList):
 def _on_mousewheel(event):
     canvas.yview_scroll(int(-1*(event.delta/120)), "units")
 
-def addTask():
+def addTask(event=None):
     value = entryBox.get()
-    taskList.append(value)
+    
+    if (value != 'Enter Task Here ..'):
+        taskList.append(value)
 
-    for i in range(len(taskList)):
-        taskLabel = tk.Label(scrollable_frame, text=f"{i+1}."+ taskList[i])
-        taskLabel.grid(row=1+i, column=0)
+    if len(value) == 0:
+        entryBox.insert(0, 'Enter Task Here ..')
 
-        checkBox = tk.Checkbutton(scrollable_frame)
-        checkBox.grid(row=1+i, column=1)
+    if len(value) !=0 and value is not None:
+        for i in range(len(taskList)):
+            taskLabel = tk.Label(scrollable_frame, text=f"{i+1}. "+ taskList[i], font=entry_font)
+            taskLabel.grid(row=1+i, column=0, sticky='nw')
 
-        # Update scrollregion
-    canvas.configure(scrollregion=canvas.bbox("all"))
+            checkBox = tk.Checkbutton(scrollable_frame, font=("Arial", 16))
+            checkBox.grid(row=1+i, column=1, padx=5)
 
-
+            # Update scrollregion
+        canvas.configure(scrollregion=canvas.bbox("all"))
+    
+        # clear the entry box widget
+        entryBox.delete(0, tk.END)
 
 
 window = tk.Tk()
@@ -69,7 +76,7 @@ deleteButton = tk.Button(window,
                          command=lambda:deleteTask(taskList))
 deleteButton.grid(row=0, column=2, padx=3, ipady=5)
 
-canvas = tk.Canvas(window, width=66 * 7, height=34 * 20)
+canvas = tk.Canvas(window, width=550, height=34 * 20)
 scrollBar = tk.Scrollbar(window, orient="vertical", command=canvas.yview)
 canvas.grid(row=1, column=0, columnspan=2)
 scrollBar.grid(row=1,column=2, sticky="ns")
@@ -90,6 +97,7 @@ def on_configure(event):
 
 scrollable_frame.bind("<Configure>", on_configure)
 
-
+# Bind the Enter key to the addTask() function
+entryBox.bind("<Return>", addTask)
 
 window.mainloop()
