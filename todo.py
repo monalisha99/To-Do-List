@@ -99,6 +99,6 @@ canvas.bind_all("<Button-5>", lambda e: canvas.yview_scroll(1, "units"))   # Lin
 canvas.bind_all("<Button-4>", lambda e: canvas.yview_scroll(-1, "units"))  # Linux scroll up
 
 # Bind the Enter key to the addTask() function
-#entryBox.bind("<Return>", addTask)
+entryBox.bind("<Return>", addTask)
 
 window.mainloop()
