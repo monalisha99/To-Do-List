@@ -51,6 +51,19 @@ def mouseWheel(event):
     canvas.yview_scroll(int(-1*(event.delta/120)), "units")
 
 
+# Function for save button
+def saveTasks():
+    tasks = taskList.get(0, tk.END)
+    try:
+        with open("tasks.txt," "w") as file:
+            for tasks in tasksList:
+                file.write( task + "\n")
+        messagebox.showinfo("Success","Saved Sucessfully.")
+    except Exception as e:
+        messagebox.showerror("Error", f"Could not save tasks:{e}")
+
+
+
 # Designing the User Interface
 window = tk.Tk()
 window.title("Welcome to To-Do list")
@@ -62,6 +75,10 @@ entry_font = font.Font(family="Monospace", size=16)
 
 entryBox = tk.Entry(window, width=48,font=entry_font)
 entryBox.grid(row=0, column=0, ipady=2, padx=10, pady=10)
+
+# Define save button and place it
+saveButton = tk.Button(window, text="Save", command=saveTasks)
+saveButton.grid(row=1, column=2, padx=10, sticky="e")
 
 addButton = tk.Button(window, 
                       text="Add",
