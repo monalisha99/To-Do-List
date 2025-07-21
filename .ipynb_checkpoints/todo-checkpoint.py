@@ -20,10 +20,10 @@ def addTask(event=None):
 
     if (len(entry_box_value)!=0) and (entry_box_value is not None) and (len(taskList)!=0):
         for i in range(len(taskList)):
-            taskLabel = tk.Label(scrollableFrame, text=f"{i+1}. "+ taskList[i], font=entry_font)
+            taskLabel = tk.Label(scrollable_frame, text=f"{i+1}. "+ taskList[i], font=entry_font)
             taskLabel.grid(row=i, column=0, sticky='nw')
 
-            checkBox = tk.Checkbutton(scrollableFrame, font=("Arial", 16))
+            checkBox = tk.Checkbutton(scrollable_frame, font=("Arial", 16))
             checkBox.grid(row=i, column=1, padx=5)
 
         # Update scrollregion
@@ -41,7 +41,7 @@ def deleteTask(taskList):
     
 
     # clear widgets from the scrollable frame
-    for w in scrollableFrame.grid_slaves():
+    for w in scrollable_frame.grid_slaves():
         w.destroy()
     
 
@@ -91,14 +91,14 @@ scrollBar.grid(row=1,column=2, sticky="ns")
 canvas.configure(yscrollcommand=scrollBar.set)
 
 # Create a frame inside the canvas to hold widgets
-scrollableFrame = tk.Frame(canvas)
-canvas.create_window((0, 0), window=scrollableFrame, anchor="nw")
+scrollable_frame = tk.Frame(canvas)
+canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
 
 
 canvas.bind_all("<Button-5>", lambda e: canvas.yview_scroll(1, "units"))   # Linux scroll down
 canvas.bind_all("<Button-4>", lambda e: canvas.yview_scroll(-1, "units"))  # Linux scroll up
 
 # Bind the Enter key to the addTask() function
-#entryBox.bind("<Return>", addTask)
+entryBox.bind("<Return>", addTask)
 
 window.mainloop()
