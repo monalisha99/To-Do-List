@@ -18,7 +18,7 @@ def addTask(event=None):
         # clear the entry box widget
         entryBox.delete(0, tk.END)
 
-    if (len(entry_box_value)!=0) and (entry_box_value is not None) and (len(taskList)!=0):
+    if (len(entry_box_value)!=0) and (entry_box_value is not None) or (len(taskList)!=0):
         for i in range(len(taskList)):
             taskLabel = tk.Label(scrollableFrame, text=f"{i+1}. "+ taskList[i], font=entry_font)
             taskLabel.grid(row=i, column=0, sticky='nw')
@@ -53,32 +53,50 @@ def mouseWheel(event):
 
 # Function for save button
 def saveTasks():
-    tasks = taskList.get(0, tk.END)
-    try:
-        with open("tasks.txt," "w") as file:
-            for tasks in tasksList:
-                file.write( task + "\n")
-        messagebox.showinfo("Success","Saved Sucessfully.")
-    except Exception as e:
-        messagebox.showerror("Error", f"Could not save tasks:{e}")
+    with open("tasks.txt","w") as file:
+        for t in taskList:
+            file.write(t + "\n")
 
+# Define an empty list to store tasks entered
+taskList =[]
+
+# # Read tasks.text file
+# try:
+#     with open("tasks.txt", "r") as file:
+#         for line in file:
+#             # store tasks in taskList
+#             # line = line.strip()
+#             print(line)
+#             taskList.append(line)
+
+#         addTask()
+# except:
+#     print('No file found')
+
+with open("tasks.txt", "r") as file:
+    for line in file:
+        # store tasks in taskList
+        # line = line.strip()
+        print(line)
+        taskList.append(line)
+
+    
 
 
 # Designing the User Interface
 window = tk.Tk()
 window.title("Welcome to To-Do list")
-window.geometry("660x480")
+window.geometry("760x480")
 
-# Define an empty list to store tasks entered
-taskList =[]
+
 entry_font = font.Font(family="Monospace", size=16)
 
 entryBox = tk.Entry(window, width=48,font=entry_font)
 entryBox.grid(row=0, column=0, ipady=2, padx=10, pady=10)
 
 # Define save button and place it
-saveButton = tk.Button(window, text="Save", command=saveTasks)
-saveButton.grid(row=1, column=2, padx=10, sticky="e")
+saveButton = tk.Button(window, text="Save", font=("Arial,11"), command=saveTasks)
+saveButton.grid(row=0, column=3,ipady=5, padx=10, sticky="e")
 
 addButton = tk.Button(window, 
                       text="Add",
@@ -110,6 +128,8 @@ canvas.configure(yscrollcommand=scrollBar.set)
 # Create a frame inside the canvas to hold widgets
 scrollableFrame = tk.Frame(canvas)
 canvas.create_window((0, 0), window=scrollableFrame, anchor="nw")
+
+addTask()
 
 
 canvas.bind_all("<Button-5>", lambda e: canvas.yview_scroll(1, "units"))   # Linux scroll down
