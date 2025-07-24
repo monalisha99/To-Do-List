@@ -51,7 +51,7 @@ def mouseWheel(event):
     canvas.yview_scroll(int(-1*(event.delta/120)), "units")
 
 
-# Function for save button
+# save tasks function
 def saveTasks():
     with open("tasks.txt","w") as file:
         for t in taskList:
