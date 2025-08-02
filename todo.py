@@ -30,7 +30,7 @@ def addTask(event=None):
         # looping through taskList and display as labels
         for i in range(len(taskList)):
             taskLabel = tk.Label(scrollableFrame, text=f"{i+1}. "+ taskList[i], font=entry_font)
-            taskLabel.grid(row=i, column=0, sticky='nw')
+            taskLabel.grid(row=i, column=0, sticky='w')
 
             checkBox = tk.Checkbutton(scrollableFrame, font=("Arial", 16))
             checkBox.grid(row=i, column=1, padx=5)
@@ -82,24 +82,24 @@ try:
 except:       
     print('No file found')
 
+
 # Designing the User Interface
-# define tkinter window 
-window = tk.Tk()
+window = tk.Tk()                       # define tkinter window 
+window.title("Welcome to To-Do list")     # add a title to the window
+window.geometry("760x480")              # set size of the window
 
-# add atitle to the window
-window.title("Welcome to To-Do list")
 
-# set size of the window
-window.geometry("760x480")
+window.columnconfigure(0, weight=1)
+window.columnconfigure(1, weight=0)  # Button column — optional to grow
+window.columnconfigure(2, weight=0)
+window.columnconfigure(3, weight=0)
 
-# define a font style, we are using monospace
-entry_font = font.Font(family="Monospace", size=16)
+window.rowconfigure(1, weight=1)  # Only the canvas row should expand vertically
 
-# define an entrybox widget, it accepts text input
-entryBox = tk.Entry(window, width=48,font=entry_font)
+entry_font = font.Font(family="Monospace", size=16)    # define a font style, we are using monospace
 
-# place the entrybox using .grid geometry
-entryBox.grid(row=0, column=0, ipady=2, padx=10, pady=10)
+entryBox = tk.Entry(window, width=48,font=entry_font)    # define an entrybox widget, it accepts text input
+entryBox.grid(row=0, column=0, columnspan=1, ipady=2, padx=10, pady=10, sticky="ew")     # place the entrybox using .grid geometry
 
 # define add button, the objective of the button is to add texts or tasks
 # using the function addTask
@@ -113,7 +113,7 @@ addButton = tk.Button(window,
                       command=lambda:addTask())
 
 # place the button in row 0, column 1
-addButton.grid(row=0, column=1, padx=3, ipady=5)
+addButton.grid(row=0, column=1, padx=3, ipady=5, sticky="ew")
 
 # define delete button, theb objective of the button is to delete the stored tasks
 # using the function deleteTask
@@ -127,21 +127,34 @@ deleteButton = tk.Button(window,
                          command=lambda:deleteTask(taskList))
 
 # place the button in row 0, column 2
-deleteButton.grid(row=0, column=2, padx=3, ipady=5)
+deleteButton.grid(row=0, column=2, padx=3, ipady=5, sticky="ew")
 
 # Define save button, the objective of the button is to save tasks 
 # using saveTasks function
-saveButton = tk.Button(window, text="Save", font=("Arial,11"), command=saveTasks)
+saveButton = tk.Button(window, 
+                      text="Save",
+                      font=("Arial,11"),
+                      bg='#89CFF0',
+                      fg='black', 
+                      activebackground='blue', 
+                      activeforeground='white', 
+                      command=saveTasks)
 
 # place the button in row 0, column 3
-saveButton.grid(row=0, column=3,ipady=5, padx=10, sticky="e")
+saveButton.grid(row=0, column=3,ipady=5, padx=10, sticky="ew")
 
 canvas = tk.Canvas(window, width=550, height=34 * 20)
-scrollBar = tk.Scrollbar(window, orient="vertical", command=canvas.yview)
-canvas.grid(row=1, column=0, columnspan=2)
-scrollBar.grid(row=1,column=2, sticky="ns")
+scrollBar = tk.Scrollbar(window, 
+                         orient="vertical",
+                         command=canvas.yview,
+                         bg="lightblue",             
+                         troughcolor="#F5F5F5",     
+                         activebackground="#A9A9A9") 
 
+canvas.grid(row=1, column=0, columnspan=2, sticky="nsew", padx=10, pady=5)
+scrollBar.grid(row=1,column=3, sticky="ns")
 canvas.configure(yscrollcommand=scrollBar.set)
+
 
 # Create a frame inside the canvas to hold widgets
 scrollableFrame = tk.Frame(canvas)
@@ -154,7 +167,9 @@ addTask()
 canvas.bind_all("<Button-5>", lambda e: canvas.yview_scroll(1, "units"))   # Linux scroll down
 canvas.bind_all("<Button-4>", lambda e: canvas.yview_scroll(-1, "units"))  # Linux scroll up
 
+
 # Bind the Enter key to the addTask() function
 entryBox.bind("<Return>", addTask)
+
 
 window.mainloop()
