@@ -14,8 +14,12 @@ To Do List App using Tkinter is my first step at learning GUI (Graphical User In
  - Widgets
  - Events
 
-<a href="https://www.linkedin.com/in/YOUR-LINKEDIN-USERNAME" target="_blank">
+<a href="[https://www.linkedin.com/in/monalisha11/](https://medium.com/@monalisha1)" target="_blank">
   <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn" width="50" height="50">
 </a>
 
-I am super active on [LinkedIn. Do send a conenction request](https://www.linkedin.com/in/monalisha11/) if you would like to expand your network.
+<a href="https://www.linkedin.com/in/monalisha11/" target="_blank">
+  <img src="[https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png](https://miro.medium.com/v2/resize:fit:1100/format:webp/1*psYl0y9DUzZWtHzFJLIvTw.png)" alt="Medium" width="50" height="50">
+</a>
+
+Follow me on Medium and I am super active on LinkedIn. Do send a conenction request if you would like to expand your network.
